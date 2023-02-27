@@ -179,7 +179,7 @@ we needed an installation method which tries to find the middle ground between t
 Requirements:
 
 * hide installation complexity
-* allow infra flexibility from the user
+* flexible infra requirements
 * help with troubleshooting
 <br>
 <br>
@@ -194,12 +194,21 @@ This leads us to an idea of Assisted Installer - a tool which helps you identify
 
 ---
 ### Agent-based method
-
-Instead of booting into real OS and getting started with kubelet and certificates lets first collect information about available hosts. In order to do that we need to boot every machine via a Live ISO and have a special agent there which fetches necessary information. This service would send it to the DB, which can be queried by a service (say, web-based) and a pretty UI on top of it.
-
-This is a basic description of OpenShift Assisted Service.
+<br>
+<br>
+<br>
+Boot into Live ISO and run the agents on node, providing info to the central service
 
 ![host-overview](imgs/assisted-service-host-overview.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+Instead of booting into real OS and getting started with kubelet and certificates lets first collect information about available hosts. In order to do that we need to boot every machine via a Live ISO and have a special agent there which fetches necessary information. This service would send it to the DB, which can be queried by a service (say, web-based) and a pretty UI on top of it.
 
 This would help us solve several problems:
 
@@ -209,7 +218,19 @@ This would help us solve several problems:
 
 ---
 ### It Takes Two To Tango
+<br>
+<br>
+<br>
+<br>
+Biderectional channel - the host can send logs back, the service can send commands on the host
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
+Note:
 A communication channel is important, as now the hosted service can now send and receive files from the host, meaning:
 
 * Necessary files like configuration, certificates etc can be sent on host
@@ -218,210 +239,251 @@ A communication channel is important, as now the hosted service can now send and
 ---
 ### Fully Automated Gay Space Luxury Installation
 
+<br>
+<br>
+<br>
+API is 💪
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
 Since we rely on hosted service, we might as well run the installer there and send artifacts on the service. This allows us limit the inputs from the user and improves reproducibility. As a result, the hosted service can be API-driven, which enabled careful tweaking and improved control over the installation process.
 
 ---
 ### Pretty is a feature
-
+<br>
+<br>
+<br>
 If the service has an API it can be visualized - using Web UI - and authenticated, so that the end-users would not mix their own clusters.
 
 ![cluster-list](imgs/assisted-service-cluster-list.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Validations
+<br>
+<br>
+<br>
 
-check CIDR, 
+Find problems before installation begins:
+* nodes can't communicate with each other
+* invalid credentials to pull images
+* slow disks for masters
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Isn't it Ironic?
+<br>
+<br>
+<br>
 
+IPMI / RedFish etc -> automatic discovery and provisioning
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
 Assisted Service also includes OpenStack Ironic, which unlocks the ability to discover and configure machines via IPMI, RedFish etc.
 
 ---
 ### Installation progress control
-
-see if all nodes have joined the cluster
+<br>
+<br>
+<br>
+UI shows installation progress:
+* control plane preparation
+* nodes joining the cluster
+* finalizing
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Day 2 operations
-
-Add more nodes to the cluster
+<br>
+<br>
+<br>
+<br>
+<br>
+Add more nodes to the cluster with a simple wizard
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### But how do I ...?
-
-There are quite a lot of other problems we'd need to cover, most of them boil down to:
-
-Networks - OpenShift uses `NMState` operator to prepare NetworkManager configuration to setup network parameters on installation.
-
-Custom configuration - `Ignition` is used in OpenShift to create necessary files / systemd services to customize node contents. Assisted Service may also receive additional k8s manifests we want to be applied during installation (i.e. different CNI, ArgoCD installation and subscription etc.)
+<br>
+<br>
+<br>
+<br>
+<br>
+There are quite a lot of other problems we'd need to cover:
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
-### How are my clusters doing?
+### But how do I ...?
+<br>
+<br>
 
+#### Networks
+
+OpenShift uses `NMState` operator to prepare NetworkManager configuration to setup network parameters on installation.
+<br>
+<br>
+<br>
+<br>
+<br>
+
+---
+### But how do I ...?
+<br>
+<br>
+
+#### Customized node configuration
+
+`Ignition` - https://coreos.github.io/ignition/
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+Ignition is used in OpenShift to create necessary files / systemd services to customize node contents. Assisted Service may also receive additional k8s manifests we want to be applied during installation (i.e. different CNI, ArgoCD installation and subscription etc.)
+
+---
+### Lies, damned lies and statistics
+<br>
+<br>
+<br>
 Collect cluster installation success rate, find problems sooner etc.
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Hello operator
-
+<br>
+<br>
 Since its a webservice, it can run in k8s. Moreover, it can also fetch input from k8s manifests and start installation in a hands-off mode.
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Of course it supports GitOps
+<br>
+<br>
 
+#### Zero Touch Provisioning
+
+Cluster definition stored in Git, applied by Flux/ArgoCD, reconciled by the operator
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note: 
 Since we can now start cluster installation via a handful of k8s manifests, these can be stored in a gitrepo and applied automatically - GitOps methods.
 
 In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
-### Example: ZTP hub configuration p. 1
-
-```yaml
-apiVersion: hive.openshift.io/v1
-kind: ClusterImageSet
-metadata:
-  name: openshift-v4.8.0
-  namespace: open-cluster-management
-spec:
-  releaseImage: quay.io/openshift-release-dev/ocp-release:4.8.0-fc.8-x86_64
-```
-This manifest describes which OpenShift release we want to install.
-
-The release image has references to all things cluster will need - kube-apiserver image, OpenShift-specific operators and even the machine OS image
+### Screenshot: Cluster list
 
 ---
-### Example: ZTP hub configuration p. 2
+### Screenshot: Discovery ISO
 
-```yaml
-apiVersion: agent-install.openshift.io/v1beta1
-kind: AgentServiceConfig
-metadata:
-  name: agent
-  namespace: open-cluster-management
-spec:
-  ...
-  ### This is a ConfigMap that has credentials to local mirror
-  mirrorRegistryRef:
-    name: "mirror-mirror-on-the-wall"
-  ### This describes which ISO is used a base for Discovery ISO
-  osImages:
-    - openshiftVersion: "4.8"
-      version: "48.84.202106070419-0"
-      url: "https://releases-rhcos-art.cloud.privileged.psi.redhat.com/storage/releases/rhcos-4.8/48.84.202106070419-0/x86_64/rhcos-48.84.202106070419-0-live.x86_64.iso"
-      rootFSUrl: "https://releases-rhcos-art.cloud.privileged.psi.redhat.com/storage/releases/rhcos-4.8/48.84.202106070419-0/x86_64/rhcos-48.84.202106070419-0-live-rootfs.x86_64.img"
-```
-This manifest specifies agent settings.
+![discovery-iso](imgs/discovery-iso.png)
 
 ---
-### Example: ZTP hub configuration p. 3
+### Screenshot: Discovered hosts
+<br>
+<br>
+<br>
 
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: assisted-deployment-ssh-private-key
-  namespace: open-cluster-management
-stringData:
-  ssh-privatekey: |-
-    -----BEGIN OPENSSH PRIVATE KEY-----
-    ...
-    -----END OPENSSH PRIVATE KEY-----
-type: Opaque
-```
-Things may go wrong and we may need to SSH on the host to start the agent. This key is not necessary for cluster installation.
+![discovered-hosts](imgs/hosts-list.png)
+![host-info](imgs/host-info.png)
+<br>
+<br>
+<br>
+<br>
 
 ---
-### Example: ZTP hub configuration p. 4
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: assisted-deployment-pull-secret
-  namespace: open-cluster-management
-stringData:
-  .dockerconfigjson: '{"auths":{"registry.ci.openshift.org":{"auth":"MYAUTHSTRING"},"quay.io":{"auth":"ANOTHERAUHTSTRING==","mirror-mirror-on-the-wall:5000":{"auth":"ANOTHERAUTH=","email":"vadim@vrutkovs.eu"}}}'
-```
-Images may require authentication to pull
-
----
-### Example: ZTP hub configuration p. 5
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: assisted-deployment-pull-secret
-  namespace: open-cluster-management
-stringData:
-  .dockerconfigjson: '{"auths":{"registry.ci.openshift.org":{"auth":"MYAUTHSTRING"},"quay.io":{"auth":"ANOTHERAUHTSTRING==","mirror-mirror-on-the-wall:5000":{"auth":"ANOTHERAUTH=","email":"vadim@vrutkovs.eu"}}}'
-```
-Images may require authentication to pull
-
+### Screenshot: Network Settings
+<br>
+<br>
+<br>
+![network-settings](imgs/network-settings.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
-### Example: target cluster configuration p. 1
-
-The following manifests describes what kind of cluster do we want
-```yaml
-apiVersion: extensions.hive.openshift.io/v1beta1
-kind: AgentClusterInstall
-metadata:
-  name: lab-cluster-aci
-  namespace: open-cluster-management
-spec:
-  clusterDeploymentRef:
-    name: lab-cluster
-  imageSetRef:
-    name: openshift-v4.8.0
-  networking:
-    clusterNetwork:
-      - cidr: "fd01::/48"
-        hostPrefix: 64
-    serviceNetwork:
-      - "fd02::/112"
-    machineNetwork:
-      - cidr: "2620:52:0:1302::/64"
-  provisionRequirements:
-    controlPlaneAgents: 1
-  sshPublicKey: "ssh-rsa adasdlkasjdlklaskdjadoipjasdoiasj root@xxxxXXXXxxx"
-```
-That would be OpenShift 4.8, single control plane node with specified network settings.
+### Screenshot: Installation progress
+<br>
+<br>
+<br>
+![installation-progress](imgs/installation-progress.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
-### Example: target cluster configuration p. 2
+### Operator: Network Configuration
+<br>
+<br>
 
-ClusterDeployment describes which nodes should be included in the cluster and its DNS settings.
-```yaml
-apiVersion: hive.openshift.io/v1
-kind: ClusterDeployment
-metadata:
-  name: lab-cluster
-  namespace: open-cluster-management
-spec:
-  baseDomain: vrutkovs.eu
-  clusterName: okd
-  controlPlaneConfig:
-    servingCertificates: {}
-  installed: false
-  clusterInstallRef:
-    group: extensions.hive.openshift.io
-    kind: AgentClusterInstall
-    name: lab-cluster-aci
-    version: v1beta1
-  platform:
-    agentBareMetal:
-      agentSelector:
-        matchLabels:
-          size: "large"
-  pullSecretRef:
-    name: assisted-deployment-pull-secret
-```
-
----
-### Example: target cluster configuration p. 3
-
-NMState describes network configuration of cluster nodes:
 ```yaml
 apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
@@ -430,6 +492,11 @@ metadata:
   labels:
     cluster-name: nmstate-lab-spoke
 spec:
+  interfaces:
+    - name: "eth0"
+      macAddress: "02:00:00:80:12:14"
+    - name: "eth1"
+      macAddress: "02:00:00:80:12:15"
   config:
     interfaces:
       - name: bond99
@@ -447,58 +514,14 @@ spec:
           slaves:
           - eth0
           - eth1
-  interfaces:
-    - name: "eth0"
-      macAddress: "02:00:00:80:12:14"
-    - name: "eth1"
-      macAddress: "02:00:00:80:12:15"
 ```
 
 ---
-### p 4
-
-InfraEnv describes configuration for a group of hosts:
-* custom Ignition setup to add `/etc/someconfig` file on each node
-* NMState config created in the previous section
+### Operator: Provision via redfish
+<br>
+<br>
 
 ```yaml
-apiVersion: agent-install.openshift.io/v1beta1
-kind: InfraEnv
-metadata:
-  name: lab-env
-  namespace: open-cluster-management
-spec:
-  clusterRef:
-    name: lab-cluster
-    namespace: open-cluster-management
-  sshAuthorizedKey: "ssh-rsa adasdlkasjdlklaskdjadoipjasdoiasj root@xxxxXXXXxxx"
-  agentLabelSelector:
-    matchLabels:
-      size: "large"
-  pullSecretRef:
-    name: assisted-deployment-pull-secret
-  ignitionConfigOverride: '{"ignition": {"version": "3.1.0"}, "storage": {"files": [{"path": "/etc/someconfig", "contents": {"source": "data:text/plain;base64,aGVscGltdHJhcHBlZGluYXN3YWdnZXJzcGVj"}}]}}'
-  nmStateConfigLabelSelector:
-    matchLabels:
-      cluster-name: nmstate-lab-spoke
-```
-
----
-### p 5
-
-`BareMetalHost` uses `RedFish` protocol to install a discovery ISO on the baremetal host.
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: bmc-secret1
-  namespace: open-cluster-management
-data:
-  password: YWxrbm9wZmxlcgo=
-  username: YW1vcmdhbnQK
-type: Opaque
----
 apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
@@ -506,8 +529,6 @@ metadata:
   namespace: open-cluster-management
   labels:
     infraenvs.agent-install.openshift.io: "lab-env"
-  annotations:
-    inspect.metal3.io: disabled
 spec:
   online: true
   bmc:
@@ -519,37 +540,22 @@ spec:
 ```
 
 ---
-### p6 
-
-If IPMI and similar are not available the user can create boot nodes using ISO from `oc get infraenv lab-env -o jsonpath={.status.isoDownloadURL}`. Once the agent has booted, the controller would create necessary `Agent` CRs and start the installation.
-
----
-### p7 - Start the engines
-
-Now once we're all set, time to signal the controller that we want the cluster install to begin:
-
-```yaml
-apiVersion: hive.openshift.io/v1
-kind: ClusterDeployment
-metadata:
-  name: lab-cluster
-  namespace: open-cluster-management
-spec:
-  installed: tru
-```
-
-and watch `.status.conditions` of this object.
-
----
 ### Bottom line
 
 Agent-based installation gives several benefits over traditional ways of installing a cluster:
 
-* Validating the cluster setting before writing anything to disk
-* Overview of the progress
+* User input validation the cluster setting before writing anything to disk
 * Provides API, which unlocks self-service and automation
+* Combines infra flexibility and UX
 
 ---
 ## Questions?
+Find me at https://vrutkovs.eu
 
-https://vrutkovs.github.io/slides-okd-installer-screenshots
+More information:
+
+https://cloud.redhat.com/blog/how-to-use-the-openshift-assisted-installer
+
+https://vrutkovs.eu/posts/okd-disconnected-assisted/
+
+https://cloud.redhat.com/blog/telco-5g-zero-touch-provisioning-ztp
