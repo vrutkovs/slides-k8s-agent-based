@@ -15,11 +15,13 @@
           data-separator="---"
           data-background-image="imgs/back.png"
           data-background-size="contain"
+          data-separator-notes="^Note:"
           data-charset="utf-8"></section>
       </div>
     </div>
     <script src="js/head.min.js"></script>
     <script src="js/reveal.js"></script>
+    <script src="js/notes/notes.js"></script>
     <script>
       Reveal.initialize({
         // Display presentation control arrows
@@ -125,6 +127,8 @@
 
         // The display mode that will be used to show slides
         display: 'block',
+
+        plugins: [ RevealNotes ],
 
         dependencies: [
           // Interpret Markdown in <section> elements
