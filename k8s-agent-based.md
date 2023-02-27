@@ -6,46 +6,191 @@ Vadim Rutkovsky
 vrutkovs@redhat.com
 
 ---
-
 ### `whoami`
+<br>
+<br>
+<br>
 
-I am a principal software engineer from Belarus living in Czech Republic.
+Principal software engineer from Belarus living in Czech Republic.
 
 Working for Red Hat in OpenShift department.
+<br>
+<br>
+<br>
+<br>
+<br>
+Note:
 
 My job is to overlook cluster lifecycle, helping customers install clusters of various configuration, extend, upgrade and manage at scale.
 
 ---
 ### Problem statement
+<br>
+<br>
+<br>
+Cluster lifecycle FAQ:
 
-Here are most common questions about cluster installation we get from customers:
+* What happens during cluster installation? What if it goes sideways?
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-* What happens during cluster installation?
-* What if it goes sideways?
-* Cluster got installed? Good, now do this hundred times more on different configurations
-* It seems easy to install a k8s cluster, can it be a self-service?
-* I heard GitOps is pure magic, can I use it install a cluster?
+Note:
 
-Lets look into all these points
+Customers need to know if installation method is flexible enough and support makes sure engineers don't come up with some crazy method. We also need a way to collect necessary information to find the problem
 
 ---
-### How does cluster generally get installed
+### Problem statement
+<br>
+<br>
+<br>
+Cluster lifecycle FAQ:
 
+* Cluster got installed? Now repeat it hundred times
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Note:
+
+Customers may want to install multiple clusters, so the installation method has to be resilient
+
+---
+### Problem statement
+<br>
+<br>
+<br>
+Cluster lifecycle FAQ:
+
+* It seems easy to install a k8s cluster, can it be a self-service?
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Note:
+
+You may want to hand off cluster installation to developers and offer it as an internal service
+
+---
+### Problem statement
+<br>
+<br>
+<br>
+Cluster lifecycle FAQ:
+
+* Can I use GitOps for this?
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+
+GitOps offers a way of tracking who did what and allows change review before they have happened, which might be useful for cluster installation
+
+---
+### The installer dilemma
+<br>
+<br>
+<br>
 Multiple possible ways - `kops`, `kubeadm`, `kubespray` etc.
+These are balancing between two extremes here
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-These are balancing between two extremes here:
+---
+### The installer dilemma
+<br>
+<br>
+<br>
+<br>
 
-* either the method is too generic that its hard to troubleshoot on real configuration (especially baremetal)
-* or the method installs all the necessary infra in the cloud (i.e. via Terraform) which makes it harder to apply on baremetal installs.
+* too generic
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+the method is too generic as you have to come up with additional tools and its hard to troubleshoot heavily customized installations (especially baremetal). For instance, `kubeadm` covers just the k8s part, not host preparation part.
+
+---
+### The installer dilemma
+<br>
+<br>
+<br>
+<br>
+
+* too specific
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+the method is too specific for particular provider - installs all the necessary infra in the cloud (i.e. via Terraform) which makes it harder to apply on baremetal installs.
 
 ---
 ### What? Another method?
+<br>
+<br>
+<br>
 
-Yes. Baremetal here is the focus, as it requires careful configuration, a lot of customization and makes troubleshooting complicated.
+Yes.
 
-General install methods like `kubeadm` just tell you the necessary part need to be fulfilled, instead of actions to perform. Its also not helpful during troubleshooting as it doesn't come with a debug tool.
+Baremetal here is the focus, as it requires careful configuration, a lot of customization and makes troubleshooting complicated.
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
+we needed an installation method which tries to find the middle ground between two extremes, focusing on bare-metal installations
+
+---
+### What? Another method?
+<br>
+<br>
+<br>
+Requirements:
+
+* hide installation complexity
+* allow infra flexibility from the user
+* help with troubleshooting
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+Note:
 This leads us to an idea of Assisted Installer - a tool which helps you identify if your cluster settings are valid and nodes fulfil the requirements
+
 
 ---
 ### Agent-based method
