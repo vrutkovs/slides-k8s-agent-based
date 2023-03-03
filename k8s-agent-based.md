@@ -216,7 +216,7 @@ This would help us solve several problems:
 <br>
 <br>
 <br>
-Biderectional channel - the host can send logs back, the service can send commands on the host
+Bidirectional channel - the host can send logs back, the service can send commands on the host
 <br>
 <br>
 <br>
