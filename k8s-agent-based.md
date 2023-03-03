@@ -1,6 +1,9 @@
 ## Agent-based k8s installation
-### or How I stopped worrying and learned to install k8s clusters
-
+or
+#### How I stopped worrying and learned to install k8s clusters
+<br>
+<br>
+<br>
 Vadim Rutkovsky
 
 vrutkovs@redhat.com
