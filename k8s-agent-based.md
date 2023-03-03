@@ -10,36 +10,19 @@ vrutkovs@redhat.com
 
 ---
 ### `whoami`
-<br>
-<br>
-<br>
-
 Principal software engineer from Belarus living in Czech Republic.
 
 Working for Red Hat in the OpenShift department.
-<br>
-<br>
-<br>
-<br>
-<br>
+
 Note:
 
 My job is to overlook cluster lifecycle, helping customers install clusters of various configuration, extend, upgrade and manage at scale.
 
 ---
 ### Problem statement
-<br>
-<br>
-<br>
 Cluster lifecycle FAQ:
 
 * What happens during cluster installation? What if it goes sideways?
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 
@@ -47,55 +30,31 @@ Customers need to know if installation method is flexible enough and support mak
 
 ---
 ### Problem statement
-<br>
-<br>
-<br>
 Cluster lifecycle FAQ:
 
 * Cluster got installed? Now repeat it a hundred times
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 Note:
 
 Customers may want to install multiple clusters, so the installation method has to be resilient
 
 ---
 ### Problem statement
-<br>
-<br>
-<br>
+
 Cluster lifecycle FAQ:
 
 * It seems easy to install a k8s cluster, can it be a self-service?
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 Note:
 
 You may want to hand off cluster installation to developers and offer it as an internal service
 
 ---
 ### Problem statement
-<br>
-<br>
-<br>
+
 Cluster lifecycle FAQ:
 
 * Can I use GitOps for this?
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 
@@ -103,91 +62,44 @@ GitOps offers a way of tracking who did what and allows change review before the
 
 ---
 ### The installer dilemma
-<br>
-<br>
-<br>
+
 Multiple possible ways - `kops`, `kubeadm`, `kubespray` etc.
 These are balancing between two extremes:
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ---
 ### The installer dilemma
-<br>
-<br>
-<br>
-<br>
 
 * Too generic
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 the method is too generic as you have to come up with additional tools and its hard to troubleshoot heavily customized installations (especially baremetal). For instance, `kubeadm` covers just the k8s part, not host preparation part.
 
 ---
 ### The installer dilemma
-<br>
-<br>
-<br>
-<br>
 
 * Too specific
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 the method is too specific for particular provider - installs all the necessary infra in the cloud (i.e. via Terraform) which makes it harder to apply on baremetal installs.
 
 ---
 ### What? Another method?
-<br>
-<br>
-<br>
 
 Yes.
 
 The focus here is Baremetal, as it requires careful configuration, a lot of customization and makes troubleshooting complicated.
-
-<br>
-<br>
-<br>
-<br>
 
 Note:
 we needed an installation method which tries to find the middle ground between two extremes, focusing on bare-metal installations
 
 ---
 ### What? Another method?
-<br>
-<br>
-<br>
+
 Requirements:
 
 * Hide installation complexity
 * Flexible infra requirements
 * Help with troubleshooting
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 This leads us to an idea of Assisted Installer - a tool which helps you identify if your cluster settings are valid and nodes fulfil the requirements
@@ -195,7 +107,7 @@ This leads us to an idea of Assisted Installer - a tool which helps you identify
 
 ---
 ### Agent-based method
-Boot into a generated Live ISO to run the agents on your node, providing info to the central service
+Boot into a Live ISO and receive host information
 
 ![host-overview](imgs/host-info.png)
 
@@ -210,17 +122,8 @@ This would help us solve several problems:
 
 ---
 ### It Takes Two to Tango
-<br>
-<br>
-<br>
-<br>
+
 Bidirectional channel - the host can send logs back, the service can send commands to run on the host
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 A communication channel is important, as now the hosted service can now send and receive files from the host, meaning:
@@ -231,33 +134,20 @@ A communication channel is important, as now the hosted service can now send and
 ---
 ### Fully Automated Gay Space Luxury Installation
 
-<br>
 API is 💪
 
 ![api](imgs/api.png)
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 Since we rely on hosted service, we might as well run the installer there and send artifacts on the service. This allows us limit the inputs from the user and improves reproducibility. As a result, the hosted service can be API-driven, which enabled careful tweaking and improved control over the installation process.
 
 ---
 ### Pretty is a feature
-<br>
+
 Since the service has an API, it can be visualized - using a Web UI
 
 ![validations](imgs/validations.png)
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 Note:
 Cute UI is always a thing which makes UX easy for newcomers and helps user to spend less time doing boring things like setting up a cluster
 
@@ -274,7 +164,6 @@ And many more
 
 ---
 ### Isn't it Ironic?
-<br>
 IPMI / RedFish etc -> Declarative automatic discovery and provisioning
 
 ![bmc](imgs/bmc.png)
@@ -291,69 +180,47 @@ UI shows installation progress:
 
 ![installation-progress](imgs/installation-progress.png)
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 Note:
 A lot of things may go wrong during cluster installation, so users need to be notified about problems and be aware of current progress
 
 ---
 ### But how do I ...?
-<br>
-<br>
-<br>
-<br>
-<br>
+
 There are quite a lot of other problems we'd need to cover:
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ---
 ### But how do I ...?
-<br>
-<br>
 
 #### Networks
 
 OpenShift uses `NMState` operator to prepare NetworkManager configuration to setup network parameters on installation.
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 Networking is never easy. In Openshift Assisted Service we're relying on NetworkManager to configure it for us. NetworkManager configuration can be generated from manifests using NMState operator
 
 ---
 ### But how do I ...?
-<br>
-<br>
 
 #### Customized node configuration
 
 `Ignition` - https://coreos.github.io/ignition/
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 Ignition is used in OpenShift to create necessary files / systemd services to customize node contents. Assisted Service may also receive additional k8s manifests we want to be applied during installation (i.e. different CNI, ArgoCD installation and subscription etc.)
 
 ---
+### But how do I ...?
+
+#### Can use another k8s distro?
+
+"Vanilla" Kubernetes is a too broad of a term, needs to be narrowed down.
+
+Note:
+Vanilla k8s comes in different sizes, so in order to make a viable service it needs to be narrowed down to a particular scope - focusing on NetworkManager, selecting an OS which can be provisioned with Ignition etc. etc.
+
+---
 ### Lies, damned lies and statistics
 Collect cluster installation success rate, find problems sooner etc.
-<br>
 
 ![grafana](imgs/grafana.png)
 
@@ -362,36 +229,18 @@ Since the agent is reporting clsuter status to the central service we as service
 
 ---
 ### Hello operator
-<br>
-<br>
-Since its a webservice, it can run in k8s. Moreover, it can also fetch input from k8s manifests and start installation in a declarative hands-off mode.
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
+Since its a webservice, it can run in k8s. Moreover, it can also fetch input from k8s manifests and start installation in a declarative hands-off mode.
 
 Note:
 We also offer this service as a part of Advanced Kubernetes Management product and in order to make API accessible to the power users, its being served as a k8s operator. This allows us to define cluster properties as k8s custom resources
 
 ---
 ### Of course it supports GitOps
-<br>
-<br>
+
 #### Zero Touch Provisioning
 
 Cluster definition stored in Git, applied by Flux/ArgoCD, reconciled by the operator
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 Since we can now start cluster installation via a handful of k8s manifests, these can be stored in a gitrepo and applied automatically - GitOps methods.
@@ -400,8 +249,7 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
 ### Screenshot: Cluster details
-<br>
-<br>
+
 ![cluster-details](imgs/cluster-details.png)
 
 ---
@@ -411,43 +259,18 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
 ### Screenshot: Discovered hosts
-<br>
-<br>
-<br>
 
 ![hosts-list](imgs/hosts-list.png)
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ---
 ### Screenshot: Network Settings
-<br>
-<br>
-<br>
+
 ![network-settings](imgs/network-settings.png)
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ---
 ### Screenshot: Installation progress
-<br>
-<br>
-<br>
+
 ![installation-progress](imgs/installation-progress.png)
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ---
 ### tada.wav
@@ -455,7 +278,6 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
 ### Operator: Network Configuration
-<br>
 
 ```yaml
 apiVersion: agent-install.openshift.io/v1beta1
@@ -488,12 +310,9 @@ spec:
           - eth0
           - eth1
 ```
-<br>
-<br>
 
 ---
 ### Operator: Provision via RedFish
-<br>
 
 ```yaml
 apiVersion: metal3.io/v1alpha1
@@ -512,35 +331,25 @@ spec:
   bootMACAddress: ee:bb:aa:ee:1e:1a
   automatedCleaningMode: disabled
 ```
-<br>
-<br>
 
 ---
 ### Epilogue
-<br>
-<br>
+
 Agent-based installation gives several benefits over traditional ways of installing a cluster:
 
 * User input validation the cluster settings before writing anything to disk
 * Provides an API which unlocks self-service and automation
 * Combines infra flexibility and UX
-<br>
-<br>
-<br>
 
 ---
-## Questions?
-<br>
+### Questions?
+
 Find me at https://vrutkovs.eu
 
 ![get-shifty](imgs/get-shifty.jpg)
-<br>
-<br>
-<br>
 
 ---
 ### Links
-<br>
 
 More information:
 
@@ -549,6 +358,3 @@ https://cloud.redhat.com/blog/how-to-use-the-openshift-assisted-installer
 https://vrutkovs.eu/posts/okd-disconnected-assisted/
 
 https://cloud.redhat.com/blog/telco-5g-zero-touch-provisioning-ztp
-<br>
-<br>
-<br>
