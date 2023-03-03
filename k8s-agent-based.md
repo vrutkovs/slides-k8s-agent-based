@@ -407,7 +407,8 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
 ### Screenshot: Cluster details
-
+<br>
+<br>
 ![cluster-details](imgs/cluster-details.png)
 
 ---
