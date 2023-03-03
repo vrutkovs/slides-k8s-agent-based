@@ -528,7 +528,7 @@ spec:
 <br>
 Agent-based installation gives several benefits over traditional ways of installing a cluster:
 
-* User input validation the cluster setting before writing anything to disk
+* User input validation of the cluster setting before writing anything to disk
 * Provides API, which unlocks self-service and automation
 * Combines infra flexibility and UX
 <br>
