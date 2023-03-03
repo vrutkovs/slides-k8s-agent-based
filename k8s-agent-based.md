@@ -16,7 +16,7 @@ vrutkovs@redhat.com
 
 Principal software engineer from Belarus living in Czech Republic.
 
-Working for Red Hat in OpenShift department.
+Working for Red Hat in the OpenShift department.
 <br>
 <br>
 <br>
@@ -52,7 +52,7 @@ Customers need to know if installation method is flexible enough and support mak
 <br>
 Cluster lifecycle FAQ:
 
-* Cluster got installed? Now repeat it hundred times
+* Cluster got installed? Now repeat it a hundred times
 <br>
 <br>
 <br>
@@ -107,7 +107,7 @@ GitOps offers a way of tracking who did what and allows change review before the
 <br>
 <br>
 Multiple possible ways - `kops`, `kubeadm`, `kubespray` etc.
-These are balancing between two extremes here
+These are balancing between two extremes:
 <br>
 <br>
 <br>
@@ -123,7 +123,7 @@ These are balancing between two extremes here
 <br>
 <br>
 
-* too generic
+* Too generic
 <br>
 <br>
 <br>
@@ -142,7 +142,7 @@ the method is too generic as you have to come up with additional tools and its h
 <br>
 <br>
 
-* too specific
+* Too specific
 <br>
 <br>
 <br>
@@ -162,7 +162,7 @@ the method is too specific for particular provider - installs all the necessary 
 
 Yes.
 
-Baremetal here is the focus, as it requires careful configuration, a lot of customization and makes troubleshooting complicated.
+The focus here is Baremetal, as it requires careful configuration, a lot of customization and makes troubleshooting complicated.
 
 <br>
 <br>
@@ -179,9 +179,9 @@ we needed an installation method which tries to find the middle ground between t
 <br>
 Requirements:
 
-* hide installation complexity
-* flexible infra requirements
-* help with troubleshooting
+* Hide installation complexity
+* Flexible infra requirements
+* Help with troubleshooting
 <br>
 <br>
 <br>
@@ -195,7 +195,7 @@ This leads us to an idea of Assisted Installer - a tool which helps you identify
 
 ---
 ### Agent-based method
-Boot into Live ISO and run the agents on node, providing info to the central service
+Boot into a generated Live ISO to run the agents on your node, providing info to the central service
 
 ![host-overview](imgs/host-info.png)
 
@@ -209,12 +209,12 @@ This would help us solve several problems:
 * Establish a communication channel with the machine without SSH
 
 ---
-### It Takes Two To Tango
+### It Takes Two to Tango
 <br>
 <br>
 <br>
 <br>
-Bidirectional channel - the host can send logs back, the service can send commands on the host
+Bidirectional channel - the host can send logs back, the service can send commands to run on the host
 <br>
 <br>
 <br>
@@ -249,7 +249,7 @@ Since we rely on hosted service, we might as well run the installer there and se
 ---
 ### Pretty is a feature
 <br>
-If the service has an API it can be visualized - using Web UI
+Since the service has an API, it can be visualized - using a Web UI
 
 ![validations](imgs/validations.png)
 <br>
@@ -263,16 +263,19 @@ Cute UI is always a thing which makes UX easy for newcomers and helps user to sp
 
 ---
 ### Validations
-Find problems before installation begins:
-* nodes can't communicate with each other
-* invalid credentials to pull images
-* slow disks for masters
+Find problems before installation begins, such as:
+* Nodes unable to communicate with each other
+* Credentials to pull images are invalid
+* Slow disks for masters
+
+And many more
 
 ![failing-validation](imgs/failing-validation.png)
 
 ---
 ### Isn't it Ironic?
-IPMI / RedFish etc -> automatic discovery and provisioning
+<br>
+IPMI / RedFish etc -> Declarative automatic discovery and provisioning
 
 ![bmc](imgs/bmc.png)
 
@@ -280,11 +283,11 @@ Note:
 Assisted Service also includes OpenStack Ironic, which unlocks the ability to discover and configure machines via IPMI, RedFish etc.
 
 ---
-### Installation progress control
+### Live installation progress
 UI shows installation progress:
-* control plane preparation
-* nodes joining the cluster
-* finalizing
+* Control plane preparation
+* Nodes joining the cluster
+* Finalization
 
 ![installation-progress](imgs/installation-progress.png)
 
@@ -361,7 +364,7 @@ Since the agent is reporting clsuter status to the central service we as service
 ### Hello operator
 <br>
 <br>
-Since its a webservice, it can run in k8s. Moreover, it can also fetch input from k8s manifests and start installation in a hands-off mode.
+Since its a webservice, it can run in k8s. Moreover, it can also fetch input from k8s manifests and start installation in a declarative hands-off mode.
 <br>
 <br>
 <br>
@@ -518,8 +521,8 @@ spec:
 <br>
 Agent-based installation gives several benefits over traditional ways of installing a cluster:
 
-* User input validation of the cluster setting before writing anything to disk
-* Provides API, which unlocks self-service and automation
+* User input validation the cluster settings before writing anything to disk
+* Provides an API which unlocks self-service and automation
 * Combines infra flexibility and UX
 <br>
 <br>
