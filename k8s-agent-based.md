@@ -194,18 +194,9 @@ This leads us to an idea of Assisted Installer - a tool which helps you identify
 
 ---
 ### Agent-based method
-<br>
-<br>
-<br>
 Boot into Live ISO and run the agents on node, providing info to the central service
 
-![host-overview](imgs/assisted-service-host-overview.png)
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+![host-overview](imgs/host-info.png)
 
 Note:
 Instead of booting into real OS and getting started with kubelet and certificates lets first collect information about available hosts. In order to do that we need to boot every machine via a Live ISO and have a special agent there which fetches necessary information. This service would send it to the DB, which can be queried by a service (say, web-based) and a pretty UI on top of it.
@@ -240,9 +231,9 @@ A communication channel is important, as now the hosted service can now send and
 ### Fully Automated Gay Space Luxury Installation
 
 <br>
-<br>
-<br>
 API is 💪
+
+![api](imgs/api.png)
 
 <br>
 <br>
@@ -257,11 +248,9 @@ Since we rely on hosted service, we might as well run the installer there and se
 ---
 ### Pretty is a feature
 <br>
-<br>
-<br>
-If the service has an API it can be visualized - using Web UI - and authenticated, so that the end-users would not mix their own clusters.
+If the service has an API it can be visualized - using Web UI
 
-![cluster-list](imgs/assisted-service-cluster-list.png)
+![validations](imgs/validations.png)
 <br>
 <br>
 <br>
@@ -273,29 +262,19 @@ Cute UI is always a thing which makes UX easy for newcomers and helps user to sp
 
 ---
 ### Validations
-<br>
-<br>
-<br>
-
 Find problems before installation begins:
 * nodes can't communicate with each other
 * invalid credentials to pull images
 * slow disks for masters
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+![failing-validation](imgs/failing-validation.png)
 
 ---
 ### Isn't it Ironic?
 <br>
-<br>
-<br>
-
 IPMI / RedFish etc -> automatic discovery and provisioning
+
+![bmc](imgs/bmc.png)
 
 <br>
 <br>
@@ -309,13 +288,13 @@ Assisted Service also includes OpenStack Ironic, which unlocks the ability to di
 
 ---
 ### Installation progress control
-<br>
-<br>
-<br>
 UI shows installation progress:
 * control plane preparation
 * nodes joining the cluster
 * finalizing
+
+![installation-progress](imgs/installation-progress.png)
+
 <br>
 <br>
 <br>
@@ -324,23 +303,6 @@ UI shows installation progress:
 <br>
 Note:
 A lot of things may go wrong during cluster installation, so users need to be notified about problems and be aware of current progress
-
----
-### Day 2 operations
-<br>
-<br>
-<br>
-<br>
-<br>
-Add more nodes to the cluster with a simple wizard
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-Note:
-Cluster lifecycle is almost never static, so users will appreciate if the same UX is used to expand it - i.e. add new nodes
 
 ---
 ### But how do I ...?
@@ -394,17 +356,10 @@ Ignition is used in OpenShift to create necessary files / systemd services to cu
 
 ---
 ### Lies, damned lies and statistics
-<br>
-<br>
-<br>
 Collect cluster installation success rate, find problems sooner etc.
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
+![grafana](imgs/grafana.png)
 
 Note:
 Since the agent is reporting clsuter status to the central service we as service providers can easily spot regressions in the service configuration by analyzing pass rate for installed clusters. This helps us maintain 75% of installation success rate
@@ -460,11 +415,16 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 ---
 ### Screenshot: Discovered hosts
 <br>
-
-![host-info](imgs/host-info.png)
 <br>
 <br>
 
+![hosts-list](imgs/hosts-list.png)
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ---
 ### Screenshot: Network Settings
