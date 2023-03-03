@@ -268,6 +268,8 @@ If the service has an API it can be visualized - using Web UI - and authenticate
 <br>
 <br>
 <br>
+Note:
+Cute UI is always a thing which makes UX easy for newcomers and helps user to spend less time doing boring things like setting up a cluster
 
 ---
 ### Validations
@@ -320,6 +322,8 @@ UI shows installation progress:
 <br>
 <br>
 <br>
+Note:
+A lot of things may go wrong during cluster installation, so users need to be notified about problems and be aware of current progress
 
 ---
 ### Day 2 operations
@@ -335,6 +339,8 @@ Add more nodes to the cluster with a simple wizard
 <br>
 <br>
 <br>
+Note:
+Cluster lifecycle is almost never static, so users will appreciate if the same UX is used to expand it - i.e. add new nodes
 
 ---
 ### But how do I ...?
@@ -363,6 +369,9 @@ OpenShift uses `NMState` operator to prepare NetworkManager configuration to set
 <br>
 <br>
 <br>
+
+Note:
+Networking is never easy. In Openshift Assisted Service we're relying on NetworkManager to configure it for us. NetworkManager configuration can be generated from manifests using NMState operator
 
 ---
 ### But how do I ...?
@@ -397,6 +406,9 @@ Collect cluster installation success rate, find problems sooner etc.
 <br>
 <br>
 
+Note:
+Since the agent is reporting clsuter status to the central service we as service providers can easily spot regressions in the service configuration by analyzing pass rate for installed clusters. This helps us maintain 75% of installation success rate
+
 ---
 ### Hello operator
 <br>
@@ -410,11 +422,14 @@ Since its a webservice, it can run in k8s. Moreover, it can also fetch input fro
 <br>
 <br>
 
+
+Note:
+We also offer this service as a part of Advanced Kubernetes Management product and in order to make API accessible to the power users, its being served as a k8s operator. This allows us to define cluster properties as k8s custom resources
+
 ---
 ### Of course it supports GitOps
 <br>
 <br>
-
 #### Zero Touch Provisioning
 
 Cluster definition stored in Git, applied by Flux/ArgoCD, reconciled by the operator
@@ -427,13 +442,15 @@ Cluster definition stored in Git, applied by Flux/ArgoCD, reconciled by the oper
 <br>
 <br>
 
-Note: 
+Note:
 Since we can now start cluster installation via a handful of k8s manifests, these can be stored in a gitrepo and applied automatically - GitOps methods.
 
 In OpenShift speak this method is called "Zero Touch Provisioning"
 
 ---
-### Screenshot: Cluster list
+### Screenshot: Cluster details
+
+![cluster-details](imgs/cluster-details.png)
 
 ---
 ### Screenshot: Discovery ISO
@@ -443,15 +460,11 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 ---
 ### Screenshot: Discovered hosts
 <br>
-<br>
-<br>
 
-![discovered-hosts](imgs/hosts-list.png)
 ![host-info](imgs/host-info.png)
 <br>
 <br>
-<br>
-<br>
+
 
 ---
 ### Screenshot: Network Settings
@@ -480,8 +493,11 @@ In OpenShift speak this method is called "Zero Touch Provisioning"
 <br>
 
 ---
+### tada.wav
+![installation-complete](imgs/installation-complete.png)
+
+---
 ### Operator: Network Configuration
-<br>
 <br>
 
 ```yaml
@@ -515,10 +531,11 @@ spec:
           - eth0
           - eth1
 ```
+<br>
+<br>
 
 ---
-### Operator: Provision via redfish
-<br>
+### Operator: Provision via RedFish
 <br>
 
 ```yaml
@@ -538,19 +555,35 @@ spec:
   bootMACAddress: ee:bb:aa:ee:1e:1a
   automatedCleaningMode: disabled
 ```
+<br>
+<br>
 
 ---
-### Bottom line
-
+### Epilogue
+<br>
+<br>
 Agent-based installation gives several benefits over traditional ways of installing a cluster:
 
 * User input validation the cluster setting before writing anything to disk
 * Provides API, which unlocks self-service and automation
 * Combines infra flexibility and UX
+<br>
+<br>
+<br>
 
 ---
 ## Questions?
+<br>
 Find me at https://vrutkovs.eu
+
+![get-shifty](imgs/get-shifty.jpg)
+<br>
+<br>
+<br>
+
+---
+### Links
+<br>
 
 More information:
 
@@ -559,3 +592,6 @@ https://cloud.redhat.com/blog/how-to-use-the-openshift-assisted-installer
 https://vrutkovs.eu/posts/okd-disconnected-assisted/
 
 https://cloud.redhat.com/blog/telco-5g-zero-touch-provisioning-ztp
+<br>
+<br>
+<br>
