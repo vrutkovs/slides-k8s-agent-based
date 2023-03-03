@@ -168,8 +168,6 @@ Baremetal here is the focus, as it requires careful configuration, a lot of cust
 <br>
 <br>
 <br>
-<br>
-<br>
 
 Note:
 we needed an installation method which tries to find the middle ground between two extremes, focusing on bare-metal installations
@@ -274,17 +272,9 @@ Find problems before installation begins:
 
 ---
 ### Isn't it Ironic?
-<br>
 IPMI / RedFish etc -> automatic discovery and provisioning
 
 ![bmc](imgs/bmc.png)
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 Note:
 Assisted Service also includes OpenStack Ironic, which unlocks the ability to discover and configure machines via IPMI, RedFish etc.
