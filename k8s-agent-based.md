@@ -346,6 +346,8 @@ Agent-based installation gives several benefits over traditional ways of install
 
 Find me at https://vrutkovs.eu
 
+https://vrutkovs.github.io/slides-k8s-agent-based/
+
 ![get-shifty](imgs/get-shifty.jpg)
 
 ---
