@@ -355,10 +355,7 @@ https://vrutkovs.github.io/slides-k8s-agent-based/
 
 More information:
 
-https://github.com/openshift/assisted-service
-
-https://cloud.redhat.com/blog/how-to-use-the-openshift-assisted-installer
-
-https://vrutkovs.eu/posts/okd-disconnected-assisted/
-
-https://cloud.redhat.com/blog/telco-5g-zero-touch-provisioning-ztp
+* https://github.com/openshift/assisted-service
+* https://cloud.redhat.com/blog/how-to-use-the-openshift-assisted-installer
+* https://vrutkovs.eu/posts/okd-disconnected-assisted/
+* https://cloud.redhat.com/blog/telco-5g-zero-touch-provisioning-ztp
