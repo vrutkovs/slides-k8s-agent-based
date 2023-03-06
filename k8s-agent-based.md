@@ -217,6 +217,20 @@ Ignition is used in OpenShift to create necessary files / systemd services to cu
 
 Note:
 Vanilla k8s comes in different sizes, so in order to make a viable service it needs to be narrowed down to a particular scope - focusing on NetworkManager, selecting an OS which can be provisioned with Ignition etc. etc.
+---
+### Why not Cluster API?
+
+Validations would not stop the broken cluster from installing.
+
+Related work:
+
+https://github.com/vmware-tanzu/cluster-api-provider-bringyourownhost
+
+https://github.com/openshift/cluster-api-provider-agent
+
+Note:
+Cluster API is a great tool to spin up new cluster, but it didn't fit our purposes. The biggest problem here is that the installation has already started, so host validations cannot prevent the misconfigured cluster from starting the installation. However, if you want to follow that route Tanzu folks have a provider which uses similar idea.
+It is also fairly easy to build a Cluster API provider using Openshift Assisted Installer agents too.
 
 ---
 ### Lies, damned lies and statistics
