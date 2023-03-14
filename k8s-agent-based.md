@@ -155,10 +155,7 @@ Cute UI is always a thing which makes UX easy for newcomers and helps user to sp
 ### Validations
 Find problems before installation begins, such as:
 * Nodes unable to communicate with each other
-* Credentials to pull images are invalid
 * Slow disks for control plane nodes
-
-And many more
 
 ![failing-validation](imgs/failing-validation.png)
 
