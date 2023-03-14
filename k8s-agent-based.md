@@ -393,7 +393,7 @@ metadata:
 spec:
   online: true
   bmc:
-    address: redfish-virtualmedia+http://[2620:52:0:1302::d7c]:8000/redfish/v1/Systems/3e6f03bb-2301-49c9-a562-ad488dca513c
+    address: redfish-virtualmedia+http://[2620:52:0:1302::100]:8000/redfish/v1/Systems/foo
     credentialsName: bmc-secret1
     disableCertificateVerification: true
   bootMACAddress: ee:bb:aa:ee:1e:1a
